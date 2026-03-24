@@ -6,6 +6,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 import pandas as pd
+import timeit
+
 
 # Load the images you want to analyze
 
@@ -92,6 +94,10 @@ df.to_csv('Percent_White_Pixels.csv', index=False)
 print("The .csv file 'Percent_White_Pixels.csv' has been created.")
 
 '''the .csv writing subroutine ends here'''
+
+# Example: Timing the threshold operation specifically
+t = timeit.Timer(lambda: cv2.threshold(img, 127, 255, cv2.THRESH_BINARY))
+print(f"Thresholding took: {t.timeit(number=1000) / 1000:.6f} seconds per call")
 
 
 ##############

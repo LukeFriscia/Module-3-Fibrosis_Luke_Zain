@@ -2,6 +2,8 @@ from termcolor import colored
 import cv2
 import numpy as np
 import pandas as pd
+import timeit
+
 
 filenames = [
     r"/Users/zain/Documents/GitHub/Module-3-Fibrosis_Luke_Zain/images/MASK_Sk658 Llobe ch010017.jpg", #defining the path to the images
@@ -44,3 +46,6 @@ df = pd.DataFrame({
 df.to_csv('Percent_White_Pixels.csv', index=False)
 
 print("The .csv file 'Percent_White_Pixels.csv' has been created.")
+# Example: Timing the threshold operation specifically
+t = timeit.Timer(lambda: cv2.threshold(img, 127, 255, cv2.THRESH_BINARY))
+print(f"Thresholding took: {t.timeit(number=1000) / 1000:.6f} seconds per call")
