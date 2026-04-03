@@ -1,3 +1,7 @@
+# ChatGPT wwas used to help during coding, modification and trouble shooting.
+#  OpenAI. (2026). ChatGPT (GPT-5 mini) [Large language model]. [https://openai.com/chatgpt](https://openai.com/chatgpt)
+
+
 '''Module 3: count black and white pixels and compute the percentage of white pixels in a .jpg image and extrapolate points'''
 
 from termcolor import colored #import all the tools
@@ -12,12 +16,12 @@ import timeit
 # Load the images you want to analyze
 
 filenames = [
-    r"/Users/zain/Documents/GitHub/Module-3-Fibrosis_Luke_Zain/images/MASK_Sk658 Llobe ch010017.jpg", #defining the path to the images
-    r"/Users/zain/Documents/GitHub/Module-3-Fibrosis_Luke_Zain/images/MASK_Sk658 Llobe ch010018.jpg",
-    r"/Users/zain/Documents/GitHub/Module-3-Fibrosis_Luke_Zain/images/MASK_Sk658 Llobe ch010019.jpg",
-    r"/Users/zain/Documents/GitHub/Module-3-Fibrosis_Luke_Zain/images/MASK_Sk658 Llobe ch010021.jpg",
-    r"/Users/zain/Documents/GitHub/Module-3-Fibrosis_Luke_Zain/images/MASK_Sk658 Llobe ch010022.jpg",
-    r"/Users/zain/Documents/GitHub/Module-3-Fibrosis_Luke_Zain/images/MASK_Sk658 Llobe ch010023.jpg",
+    "C:\\Users\\Luke Friscia\\OneDrive\\CompBME\\Module-3-Fibrosis_Luke_Zain\\images\\MASK_Sk658 Llobe ch010017.jpg", #defining the path to the images
+    "C:\\Users\\Luke Friscia\\OneDrive\\CompBME\\Module-3-Fibrosis_Luke_Zain\\images\\MASK_Sk658 Llobe ch010018.jpg",
+    "C:\\Users\\Luke Friscia\\OneDrive\\CompBME\\Module-3-Fibrosis_Luke_Zain\\images\\MASK_Sk658 Llobe ch010019.jpg",
+    "C:\\Users\\Luke Friscia\\OneDrive\\CompBME\\Module-3-Fibrosis_Luke_Zain\\images\\MASK_Sk658 Llobe ch010021.jpg",
+    "C:\\Users\\Luke Friscia\\OneDrive\\CompBME\\Module-3-Fibrosis_Luke_Zain\\images\\MASK_Sk658 Llobe ch010022.jpg",
+    "C:\\Users\\Luke Friscia\\OneDrive\\CompBME\\Module-3-Fibrosis_Luke_Zain\\images\\MASK_Sk658 Llobe ch010023.jpg",
 ]
 
 # Enter the depth of each image (in the same order that the images are listed above; you can find these in the .csv file provided to you which is tilted: "Filenames and Depths for Students")
@@ -105,45 +109,67 @@ print(f"Thresholding took: {t.timeit(number=1000) / 1000:.6f} seconds per call")
 
 # # Interpolate a point: given a depth, find the corresponding white pixel percentage
 
-# interpolate_depth = float(input(colored(
-#     "Enter the depth at which you want to interpolate a point (in microns): ", "yellow")))
+interpolate_depth = float(input(colored(
+     "Enter the depth at which you want to interpolate a point (in microns): ", "yellow")))
 
-# x = depths
-# y = white_percents
+x = depths
+y = white_percents
 
 # # You can also use 'quadratic', 'cubic', etc.
-# i = interp1d(x, y, kind='linear')
-# interpolate_point = i(interpolate_depth)
-# print(colored(
-#     f'The interpolated point is at the x-coordinate {interpolate_depth} and y-coordinate {interpolate_point}.', "green"))
+# Linear interpolation
+i_linear = interp1d(x, y, kind='linear')
+y_linear = i_linear(interpolate_depth)
 
-# depths_i = depths[:]
-# depths_i.append(interpolate_depth)
-# white_percents_i = white_percents[:]
-# white_percents_i.append(interpolate_point)
+# Quadratic interpolation
+i_quad = interp1d(x, y, kind='quadratic')
+y_quad = i_quad(interpolate_depth)
+
+# Point for code compatibility
+interpolate_point = y_linear
+
+
+print(colored(f'Linear interpolation: {y_linear}', "green"))
+print(colored(f'Quadratic interpolation: {y_quad}', "cyan"))
+
+depths_i = depths[:]
+depths_i.append(interpolate_depth)
+white_percents_i = white_percents[:]
+white_percents_i.append(interpolate_point)
 
 
 # # make two plots: one that doesn't contain the interpolated point, just the data calculated from your images, and one that also contains the interpolated point (shown in red)
-# fig, axs = plt.subplots(2, 1)
-
-# axs[0].scatter(depths, white_percents, marker='o', linestyle='-', color='blue')
-# axs[0].set_title('Plot of depth of image vs percentage white pixels')
-# axs[0].set_xlabel('depth of image (in microns)')
-# axs[0].set_ylabel('white pixels as a percentage of total pixels')
-# axs[0].grid(True)
+fig, axs = plt.subplots(2, 1, figsize=(8, 10))
 
 
-# axs[1].scatter(depths_i, white_percents_i, marker='o',
-#                linestyle='-', color='blue')
-# axs[1].set_title(
-#     'Plot of depth of image vs percentage white pixels with interpolated point (in red)')
-# axs[1].set_xlabel('depth of image (in microns)')
-# axs[1].set_ylabel('white pixels as a percentage of total pixels')
-# axs[1].grid(True)
-# axs[1].scatter(depths_i[len(depths_i)-1], white_percents_i[len(white_percents_i)-1],
-#                color='red', s=100, label='Highlighted point')
+# Original data 
+
+axs[0].scatter(depths, white_percents, marker='o', color='blue', label='Data')
+axs[0].plot(depths, white_percents, color='blue', linestyle='-')  # optional line
+axs[0].set_title('Depth vs % White Pixels (Original Data)')
+axs[0].set_xlabel('Depth (microns)')
+axs[0].set_ylabel('% White Pixels')
+axs[0].grid(True)
+axs[0].legend()
+
+
+# Data + interpolated points
+
+axs[1].scatter(depths, white_percents, marker='o', color='blue', label='Data')
+axs[1].plot(depths, white_percents, color='blue', linestyle='-')  # optional line
+
+# Linear interpolated point
+axs[1].scatter(interpolate_depth, y_linear, color='red', s=100, label=f'Linear ({y_linear:.2f})')
+
+# Quadratic interpolated point
+axs[1].scatter(interpolate_depth, y_quad, color='green', s=100, label=f'Quadratic ({y_quad:.2f})')
+
+axs[1].set_title('Depth vs % White Pixels with Interpolated Points')
+axs[1].set_xlabel('Depth (microns)')
+axs[1].set_ylabel('% White Pixels')
+axs[1].grid(True)
+axs[1].legend()
 
 
 # # Adjust layout to prevent overlap
-# plt.tight_layout()
-# plt.show()
+plt.tight_layout()
+plt.show()
