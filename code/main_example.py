@@ -100,7 +100,7 @@ t = timeit.Timer(lambda: cv2.threshold(img, 127, 255, cv2.THRESH_BINARY))
 print(f"Thresholding took: {t.timeit(number=1000) / 1000:.6f} seconds per call")
 
 
-##############
+################
 # LECTURE 2: UNCOMMENT BELOW
 
 # # Interpolate a point: given a depth, find the corresponding white pixel percentage

@@ -22,7 +22,7 @@ print("A = ", A)
 
 # # Compute one specific point (x=2)
 a1, a2 = A
-x_value = 2
+x_value = 1.5
 y_value = a1 + a2 * x_value
 print("At x = 2, y =", y_value)
 
