@@ -16,18 +16,20 @@ import timeit
 # Load the images you want to analyze
 
 filenames = [
-    "C:\\Users\\Luke Friscia\\OneDrive\\CompBME\\Module-3-Fibrosis_Luke_Zain\\images\\MASK_Sk658 Llobe ch010017.jpg", #defining the path to the images
-    "C:\\Users\\Luke Friscia\\OneDrive\\CompBME\\Module-3-Fibrosis_Luke_Zain\\images\\MASK_Sk658 Llobe ch010018.jpg",
-    "C:\\Users\\Luke Friscia\\OneDrive\\CompBME\\Module-3-Fibrosis_Luke_Zain\\images\\MASK_Sk658 Llobe ch010019.jpg",
-    "C:\\Users\\Luke Friscia\\OneDrive\\CompBME\\Module-3-Fibrosis_Luke_Zain\\images\\MASK_Sk658 Llobe ch010021.jpg",
-    "C:\\Users\\Luke Friscia\\OneDrive\\CompBME\\Module-3-Fibrosis_Luke_Zain\\images\\MASK_Sk658 Llobe ch010022.jpg",
-    "C:\\Users\\Luke Friscia\\OneDrive\\CompBME\\Module-3-Fibrosis_Luke_Zain\\images\\MASK_Sk658 Llobe ch010023.jpg",
+    "/Users/zain/Documents/GitHub/Module-3-Fibrosis_Luke_Zain/images/MASK_Sk658 Llobe ch010017.jpg", #defining the path to the images
+    "/Users/zain/Documents/GitHub/Module-3-Fibrosis_Luke_Zain/images/MASK_Sk658 Llobe ch010018.jpg",
+    "/Users/zain/Documents/GitHub/Module-3-Fibrosis_Luke_Zain/images/MASK_Sk658 Llobe ch010019.jpg",
+    "/Users/zain/Documents/GitHub/Module-3-Fibrosis_Luke_Zain/images/MASK_Sk658 Llobe ch010021.jpg",
+    "/Users/zain/Documents/GitHub/Module-3-Fibrosis_Luke_Zain/images/MASK_Sk658 Llobe ch010022.jpg",
+    "/Users/zain/Documents/GitHub/Module-3-Fibrosis_Luke_Zain/images/MASK_Sk658 Llobe ch010023.jpg",
+    "/Users/zain/Documents/GitHub/Module-3-Fibrosis_Luke_Zain/images/MASK_SK658 Slobe ch010130.jpg",
 ]
 
 # Enter the depth of each image (in the same order that the images are listed above; you can find these in the .csv file provided to you which is tilted: "Filenames and Depths for Students")
 
 depths = [ #defining the depths
     15,
+    200,
     1000,
     3000,
     5300,
@@ -99,9 +101,6 @@ print("The .csv file 'Percent_White_Pixels.csv' has been created.")
 
 '''the .csv writing subroutine ends here'''
 
-# Example: Timing the threshold operation specifically
-t = timeit.Timer(lambda: cv2.threshold(img, 127, 255, cv2.THRESH_BINARY))
-print(f"Thresholding took: {t.timeit(number=1000) / 1000:.6f} seconds per call")
 
 
 ################
